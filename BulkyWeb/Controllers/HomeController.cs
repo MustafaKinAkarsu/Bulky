@@ -13,9 +13,9 @@ namespace BulkyWeb.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() 
         {
-            return View();
+            return View(); // Because we did not specified anything inside View(), it automatically detects the method name which is Index. So it returns the file named Index inside View-->Home folder
         }
 
         public IActionResult Privacy()
