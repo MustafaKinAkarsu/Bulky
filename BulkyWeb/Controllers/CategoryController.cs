@@ -43,9 +43,6 @@ namespace BulkyWeb.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
-			//Category? categoryFromDb = _db.Categories.FirstOrDefault(u=> u.Name =="fdfsdfs") or Category? categoryFromDb = _db.Categories.FirstOrDefault(u => u.Name.Contains("fasdfa");
-			//Advantage of this is it does not require primary key unlike Find
-			//Category? categoryFromDb = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 			if (categoryFromDb == null) NotFound();
 			return View(categoryFromDb);
 		}
@@ -60,6 +57,28 @@ namespace BulkyWeb.Controllers
 				return RedirectToAction("Index"); // To return to the Index Action. (To see updated Categories)
 			}
 			return View();
+		}
+		public IActionResult Delete(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+			Category? categoryFromDb = _db.Categories.Find(id);
+			if (categoryFromDb == null) NotFound();
+			return View(categoryFromDb);
+		}
+		[HttpPost, ActionName("Delete")]
+		public IActionResult DeletePOST(int? id)
+		{
+			Category? obj = _db.Categories.Find(id);
+			if (obj == null)
+			{
+				return NotFound();
+			}
+			_db.Categories.Remove(obj); 
+			_db.SaveChanges(); 
+			return RedirectToAction("Index"); 
 		}
 	}
 }
